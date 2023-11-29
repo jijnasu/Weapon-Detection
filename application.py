@@ -164,7 +164,10 @@ def process_video(video, model):
     cap.release()
     os.remove(video_path)
 
-    return processed_video_path
+    with open(processed_video_path, "rb") as file:
+        # processed_video_file = base64.b64encode(file.read()).decode()
+        processed_video_file = file.read()
+    return processed_video_path, processed_video_file
 
 
 
@@ -204,10 +207,7 @@ def main():
             st.header('Uploaded Video')
             st.video(uploaded_file, format="video/mp4", start_time=0)
             st.header('Processing Result')
-            processed_video_path = process_video(uploaded_file, model)
-            with open(processed_video_path, "rb") as file:
-                # processed_video_file = base64.b64encode(file.read()).decode()
-                processed_video_file = file.read()
+            processed_video_path, processed_video_file = process_video(uploaded_file, model)
             # output_file = f"op-{file_name}.mp4"
             st.write('Final output video')
             st.video(processed_video_path, format="video/mp4", start_time=0)
