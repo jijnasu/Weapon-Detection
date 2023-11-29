@@ -1,0 +1,13 @@
+opencv-python
+pillow
+tqdm
+numpy
+pandas
+matplotlib
+torchvision
+tensorflow
+ultralytics
+base64
+tempfile
+io
+streamlit
