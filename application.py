@@ -18,6 +18,7 @@ import base64
 import tempfile
 import io
 import cv2
+import subprocess
 # import wandb
 
 # print(torch.__version__)
@@ -54,7 +55,7 @@ def download_button(object_to_download, download_filename, button_text, key):
     href = f'<span>Download result <a href="{file}" download="{download_filename}">{download_filename}</a></span>'
     st.markdown(href, unsafe_allow_html=True)
     # st.download_button(button_text, file, download_filename)
-    
+
 
 # THE MODEL============================================================
 def get_model():
@@ -97,6 +98,18 @@ def process_images(img, model):
 
 
 # VIDEO INPUTS============================================================
+def compress_video(input_file, output_file):
+    # Input and output file paths
+    # input_file = os.path.join(f'/Users/jijnasu/Downloads/op-CQC-2s.mp4')
+    # output_file = os.path.join(f'/Users/jijnasu/Downloads/op-CQC-2s--2.mp4')
+    # print(input_file)
+    # FFmpeg command for video compression
+    ffmpeg_command = f'ffmpeg -i {input_file} -c:v libx264 -crf 23 {output_file}'
+
+    # Run FFmpeg command
+    res = subprocess.run(ffmpeg_command, shell=True)
+    # print(res)
+
 def process_frame(frame):
     im_array = frame.plot()
     im = Image.fromarray(im_array[..., ::-1])
@@ -114,6 +127,8 @@ def process_video(video, model):
     # preprocess video
     video_name = video.name.split('.')[0]
     video_path = f'{video_name}.mp4'
+    video_name = ''.join(v if v.isalnum() else ' ' for v in video_name)
+    video_name = video_name.replace(' ', '-')
     video = preprocess_video(video, video_path)
 
     st.write('Realtime detection')
@@ -134,7 +149,7 @@ def process_video(video, model):
     # Process the video frames
     cap = cv2.VideoCapture(video_path)
 
-    processed_video_path = f'op-{video_name}.mp4'
+    processed_video_path = f'optemp-{video_name}.mp4'
     processed_video_writer = cv2.VideoWriter(
         processed_video_path,
         cv2.VideoWriter_fourcc(*'mp4v'),
@@ -167,7 +182,17 @@ def process_video(video, model):
     with open(processed_video_path, "rb") as file:
         # processed_video_file = base64.b64encode(file.read()).decode()
         processed_video_file = file.read()
-    return processed_video_path, processed_video_file
+        
+    final_video_path = f'op-{video_name}.mp4'
+    compress_video(processed_video_path, final_video_path)
+    ffmpeg_command = f'ffmpeg -i {processed_video_path} -c:v libx264 -crf 23 {final_video_path} -y'
+    # Run FFmpeg command
+    res = subprocess.run(ffmpeg_command, shell=True)
+    with open(final_video_path, "rb") as file:
+        # final_video_file = base64.b64encode(file.read()).decode()
+        final_video_file = file.read()
+    
+    return final_video_path, final_video_file
 
 
 
