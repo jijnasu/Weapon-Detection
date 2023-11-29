@@ -2,7 +2,6 @@
 
 
 
-import cv2
 from PIL import Image
 import tqdm
 import os
@@ -18,6 +17,7 @@ from ultralytics import YOLO
 import base64
 import tempfile
 import io
+import cv2
 # import wandb
 
 # print(torch.__version__)
