@@ -7,7 +7,4 @@ matplotlib
 torchvision
 tensorflow
 ultralytics
-base64
-tempfile
-io
 streamlit
