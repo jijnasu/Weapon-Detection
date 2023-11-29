@@ -2,8 +2,8 @@
 
 
 
-from PIL import Image
 import cv2
+from PIL import Image
 import tqdm
 import os
 import numpy as np # linear algebra
@@ -100,8 +100,8 @@ def process_images(img, model):
 def process_frame(frame):
     im_array = frame.plot()
     im = Image.fromarray(im_array[..., ::-1])
-    return frame
     frame = cv2.cvtColor(np.array(im), cv2.COLOR_RGB2BGR)
+    return frame
 
 def preprocess_video(video, video_path):
     with open(video_path, "wb") as video_file:
@@ -132,17 +132,17 @@ def process_video(video, model):
     frame_height, frame_width = first_result.orig_shape
 
     # Process the video frames
-
     cap = cv2.VideoCapture(video_path)
+
     processed_video_path = f'op-{video_name}.mp4'
-        processed_video_path,
     processed_video_writer = cv2.VideoWriter(
-        25,
+        processed_video_path,
         cv2.VideoWriter_fourcc(*'H264'),
+        25,
         (frame_width, frame_height)
     )
-    # out = cv2.VideoWriter(f'{op_dir}_XVID.avi', cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), 25, (frame_width, frame_height))
     # out = cv2.VideoWriter(f'{op_dir}_MJPG.avi', cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 25, (frame_width, frame_height))
+    # out = cv2.VideoWriter(f'{op_dir}_XVID.avi', cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), 25, (frame_width, frame_height))
     # out = cv2.VideoWriter(f'{op_dir}_H264.mp4', cv2.VideoWriter_fourcc(*'H264'), 25, (frame_width, frame_height)) #lowest file size
     # out = cv2.VideoWriter(f'{op_dir}_mp4v.mp4', cv2.VideoWriter_fourcc(*'mp4v'), 25, (frame_width, frame_height))
 
