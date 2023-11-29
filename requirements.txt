@@ -6,5 +6,5 @@ pandas
 matplotlib
 torchvision
 tensorflow
-ultralytics
+ultralytics==8.0.180
 streamlit
