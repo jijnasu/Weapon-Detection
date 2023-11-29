@@ -8,3 +8,4 @@ torchvision
 tensorflow
 ultralytics==8.0.180
 streamlit
+dill==0.3.5.1
