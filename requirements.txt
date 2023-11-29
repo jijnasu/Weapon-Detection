@@ -8,3 +8,6 @@ torchvision
 tensorflow
 ultralytics
 streamlit
+libsm6
+libxext6
+libxrender1
