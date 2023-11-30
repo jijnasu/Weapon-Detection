@@ -250,7 +250,7 @@ def main():
     st.write('by Kumar Jijnasu')
     st.link_button('github.com/jijnasu','https://github.com/jijnasu')
     st.write('Other projects')
-    st.link_button('Brain Tumor Classification','https://brain-tumor-classification-kjlink.streamlit.app')
+    st.link_button('Brain Tumor Classification','https://brain-tumor-classification-kj.streamlit.app')
 
 
 if __name__ == "__main__":
