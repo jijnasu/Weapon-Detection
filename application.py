@@ -192,6 +192,7 @@ def process_video(video, model):
         # final_video_file = base64.b64encode(file.read()).decode()
         final_video_file = file.read()
     
+    os.remove(processed_video_path)
     return final_video_path, final_video_file
 
 
