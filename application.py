@@ -58,12 +58,15 @@ def download_button(object_to_download, download_filename, button_text, key):
 
 
 # THE MODEL============================================================
+# @st.cache(max_entries=1, hash_funcs={"MyUnhashableClass": lambda _: None})
+@st.cache_resource(max_entries=1, hash_funcs={"MyUnhashableClass": lambda _: None})
 def get_model():
 # wandb.login(key='9609b85b30dcd32e6169dda61daa747e6503bf8f')
     data_dir = "dataset.yaml"
     best_model_dir = "runs/detect/train/weights/best.pt"
     last_model_dir = "runs/detect/train/weights/last.pt"
     model = YOLO(best_model_dir)
+    print('YOLO model loaded.')
     return model
 
 
