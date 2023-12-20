@@ -67,6 +67,7 @@ def get_model():
     last_model_dir = "runs/detect/train/weights/last.pt"
     model = YOLO(best_model_dir)
     print('YOLO model loaded.')
+    # print(model)
     return model
 
 
@@ -246,6 +247,36 @@ def main():
 
         else:
             st.warning("Unsupported file format. Please upload an image (jpg, jpeg, png) or video (mp4).")
+
+    # Rest of your code...
+    st.divider()
+
+    # Local paths to example images
+    image_paths = {
+        'Image 1': 'inputs/images/image1.jpg',
+        'Image 2': 'inputs/images/image2.jpg',
+        'Image 3': 'inputs/images/image3.jpg',
+        # 'Image 4': 'inputs/images/image4.jpg',
+    }
+
+    # Add a selectbox with example images
+    selected_example = st.selectbox('Select an example image:', list(image_paths.keys()))
+
+    # Display the selected example image
+    st.image(image_paths[selected_example], caption=selected_example, width=300)  # Set the width in pixels or any other valid size
+
+    st.subheader('Example Images:')
+    image_row = st.container()
+    with image_row:
+        for name, path in image_paths.items():
+            if st.button(name):
+                # Process the selected image using your model
+                processed_image = process_images(path, model)
+                # Display the processed image
+                st.image(processed_image, caption=f"Processed {name}", width=300)
+            else:
+                st.write(name+'false')
+
 
 
     st.divider()
