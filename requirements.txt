@@ -4,6 +4,7 @@ tqdm
 numpy
 pandas
 matplotlib
+torch==2.5.0 
 torchvision
 tensorflow
 ultralytics==8.0.180
